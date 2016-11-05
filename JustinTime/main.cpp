@@ -1,10 +1,9 @@
 #include "stagedirector.h"
-#include "menustage.h"
+#include "drawcontext.h"
+#include "luastage.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "lua/lua.hpp"
-
 
 int main() {
 	srand((unsigned int) time(NULL));
@@ -14,10 +13,16 @@ int main() {
 
 	// Create a window for the game.
     sf::RenderWindow window(sf::VideoMode(640, 480), "SFML Test");
+    window.setFramerateLimit(60);
+
+    DrawContext drawContext = DrawContext::getInstance();
+    drawContext.setWindow(&window);
+
+    LuaStage *luaStage = new LuaStage("stages/test.lua");
 
 	// Stage director to handle stages within a game.
 	StageDirector director;
-	director.setStage(new MenuStage());
+	director.setStage(luaStage);
 
 	// Game loop.
     while (window.isOpen()) {

@@ -1,4 +1,5 @@
 #include "stagedirector.h"
+#include "drawcontext.h"
 
 StageDirector::StageDirector() {
 	stage = nullptr;

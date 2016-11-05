@@ -117,6 +117,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="drawcontext.cpp" />
+    <ClCompile Include="luastage.cpp" />
     <ClCompile Include="lua\lapi.c" />
     <ClCompile Include="lua\lauxlib.c" />
     <ClCompile Include="lua\lbaselib.c" />
@@ -151,11 +153,13 @@
     <ClCompile Include="lua\lvm.c" />
     <ClCompile Include="lua\lzio.c" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MenuStage.cpp" />
+    <ClCompile Include="menustage.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stagedirector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="drawcontext.h" />
+    <ClInclude Include="luastage.h" />
     <ClInclude Include="lua\lapi.h" />
     <ClInclude Include="lua\lauxlib.h" />
     <ClInclude Include="lua\lcode.h" />
