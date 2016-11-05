@@ -32,7 +32,7 @@ int DrawContext::setColor(lua_State *lua) {
 
     // Get the optional alpha parameter.
     if (lua_gettop(lua) > 3) {
-        alpha = (unsigned char) lua_tointeger(lua, -4);
+        alpha = (unsigned char) lua_tointeger(lua, 4);
     }
 
     // Create a color object with the RGBA values.
@@ -55,6 +55,26 @@ int DrawContext::setColor(lua_State *lua) {
  * Returns:      None.
  */
 int DrawContext::setOutlineColor(lua_State *lua) {
+    DrawContext &drawContext = DrawContext::getInstance();
+
+    // Get the RGB parameters.
+    unsigned char red = (unsigned char)luaL_checknumber(lua, 1);
+    unsigned char green = (unsigned char)luaL_checknumber(lua, 2);
+    unsigned char blue = (unsigned char)luaL_checknumber(lua, 3);
+    unsigned char alpha = 255;
+
+    // Get the optional alpha parameter.
+    if (lua_gettop(lua) > 3) {
+        alpha = (unsigned char) lua_tointeger(lua, 4);
+    }
+
+    // Create a color object with the RGBA values.
+    sf::Color color(red, green, blue, alpha);
+
+    // Set the shape color to be the given color.
+    drawContext.rectangleShape.setOutlineColor(color);
+    drawContext.polygonShape.setOutlineColor(color);
+
     return 0;
 }
 
@@ -65,6 +85,15 @@ int DrawContext::setOutlineColor(lua_State *lua) {
  * Returns:      None.
  */
 int DrawContext::setOutlineThickness(lua_State *lua) {
+    DrawContext &drawContext = DrawContext::getInstance();
+
+    // Get the desired thickness.
+    float thickness = (unsigned char) luaL_checknumber(lua, 1);
+
+    // Set the thickness to the desired value.
+    drawContext.rectangleShape.setOutlineThickness(thickness);
+    drawContext.polygonShape.setOutlineThickness(thickness);
+
     return 0;
 }
 
@@ -75,6 +104,15 @@ int DrawContext::setOutlineThickness(lua_State *lua) {
  * Returns:      None.
  */
 int DrawContext::setRotation(lua_State *lua) {
+    DrawContext &drawContext = DrawContext::getInstance();
+
+    // Get the desired angle.
+    float angle = (unsigned char)luaL_checknumber(lua, 1);
+
+    // Set the angle to the desired value.
+    drawContext.rectangleShape.setRotation(angle);
+    drawContext.polygonShape.setRotation(angle);
+
     return 0;
 }
 
@@ -90,15 +128,18 @@ int DrawContext::setRotation(lua_State *lua) {
 int DrawContext::rectangle(lua_State *lua) {
     DrawContext &drawContext = DrawContext::getInstance();
 
+    // Make sure there is a window to draw to.
     if (!drawContext.window) {
         return 0;
     }
 
+    // Get the parameters for the function.
     float x = (float) luaL_checknumber(lua, 1);
     float y = (float) luaL_checknumber(lua, 2);
     float width = (float) luaL_checknumber(lua, 3);
     float height = (float) luaL_checknumber(lua, 4);
 
+    // Set the properties of the rectangle to the desired values.
     drawContext.rectangleShape.setPosition(x, y);
     drawContext.rectangleShape.setSize(sf::Vector2f(width, height));
 
@@ -118,6 +159,31 @@ int DrawContext::rectangle(lua_State *lua) {
  * Returns:      None.
  */
 int DrawContext::polygon(lua_State *lua) {
+    DrawContext &drawContext = DrawContext::getInstance();
+
+    // Make sure there is a window to draw to.
+    if (!drawContext.window) {
+        return 0;
+    }
+
+    // Get the parameters of the function.
+    float x = (float)luaL_checknumber(lua, 1);
+    float y = (float)luaL_checknumber(lua, 2);
+    float radius = (float)luaL_checknumber(lua, 3);
+    int sides = 30;
+
+    if (lua_gettop(lua) > 3) {
+        sides = (int) luaL_checknumber(lua, 4);
+    }
+
+    // Set the properties of the polygon to fit the desired values.
+    drawContext.polygonShape.setPosition(x, y);
+    drawContext.polygonShape.setRadius(radius);
+    drawContext.polygonShape.setPointCount(sides);
+
+    // Draw the polygon.
+    drawContext.window->draw(drawContext.polygonShape);
+
     return 0;
 }
 
