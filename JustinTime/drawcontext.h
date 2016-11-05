@@ -7,13 +7,13 @@
 class DrawContext {
     private:
         // A generic rectangle to draw rectangular shapes.
-        static sf::RectangleShape rectangleShape;
+        sf::RectangleShape rectangleShape;
 
         // A generic polygon to draw polygon shapes.
         sf::CircleShape polygonShape;
 
         // RenderWindow for drawing shapes.
-        static sf::RenderWindow *window;
+        sf::RenderWindow *window;
 
     public:
         // Empty constructor.
@@ -47,5 +47,5 @@ class DrawContext {
         static int line(lua_State *lua);
 
         // Sets up Lua bindings for drawing shapes using a DrawingContext.
-        static void bind(lua_State *lua);
+        void bind(lua_State *lua);
 };

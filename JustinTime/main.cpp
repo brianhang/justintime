@@ -15,8 +15,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(640, 480), "SFML Test");
     window.setFramerateLimit(60);
 
-    DrawContext drawContext = DrawContext::getInstance();
-    drawContext.setWindow(&window);
+    DrawContext::getInstance().setWindow(&window);
 
     LuaStage *luaStage = new LuaStage("stages/test.lua");
 
