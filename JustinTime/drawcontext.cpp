@@ -32,7 +32,7 @@ int DrawContext::setColor(lua_State *lua) {
 
     // Get the optional alpha parameter.
     if (lua_gettop(lua) > 3) {
-        alpha = (unsigned char) lua_tointeger(lua, 4);
+        alpha = (unsigned char)luaL_checknumber(lua, 4);
     }
 
     // Create a color object with the RGBA values.
@@ -65,7 +65,7 @@ int DrawContext::setOutlineColor(lua_State *lua) {
 
     // Get the optional alpha parameter.
     if (lua_gettop(lua) > 3) {
-        alpha = (unsigned char) lua_tointeger(lua, 4);
+        alpha = (unsigned char) luaL_checknumber(lua, 4);
     }
 
     // Create a color object with the RGBA values.
