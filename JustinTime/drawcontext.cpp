@@ -239,12 +239,13 @@ int DrawContext::line(lua_State *lua) {
 
 
 /* 
- * Lua Function: draw.text(x, y, string, font)
+ * Lua Function: draw.text(x, y, string, font, size)
  * Description:	 Draws the string beginning at x,y with the given font
  * Parameters:	 x - the x-coordinate of the starting point
  *				 y - the y-coordinate of the starting point 
  *				 string - piece of text that is drawn
  *				 font - font of the text
+ *				 size - size of text
  * Returns:      None.
  */
 int DrawContext::text(lua_State *lua) {
@@ -262,25 +263,30 @@ int DrawContext::text(lua_State *lua) {
 	std::string fontName(luaL_checkstring(lua, 4));
 	unsigned int size = (unsigned int)luaL_checknumber(lua, 5);
 
+	// Create a hash map for the font
 	std::unordered_map<std::string, sf::Font>::const_iterator it;
 	it = drawContext.fontMap.find(fontName);
 
+	// Check if font is in the hashmap already
 	if (it == drawContext.fontMap.end()) {
 		sf::Font font;
 
+		// Load the font from file
 		if (font.loadFromFile("fonts/" + fontName + ".ttf")) {
 			std::cerr << fontName << " could not be found!" << std::endl;
 		}
 	
+		// Set font in the hashmap
 		drawContext.fontMap[fontName] = font;
 	}
 
+	// Set the parameters of the text
 	drawContext.textShape.setPosition(x, y);
 	drawContext.textShape.setString(text);
 	drawContext.textShape.setFont(drawContext.fontMap[fontName]);
 	drawContext.textShape.setCharacterSize(size);
 	
-
+	// Draw text
 	drawContext.window->draw(drawContext.textShape);
 
 	return 0;
