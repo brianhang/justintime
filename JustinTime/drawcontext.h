@@ -46,6 +46,9 @@ class DrawContext {
         // Draws a line from (x1, y1) to (x2, y2).
         static int line(lua_State *lua);
 
+		// Draws text beginning at (x, y).
+		static int text(lua_State *lua);
+
         // Sets up Lua bindings for drawing shapes using a DrawingContext.
         void bind(lua_State *lua);
 };

@@ -233,10 +233,11 @@ int DrawContext::line(lua_State *lua) {
 	//set rotation back to its initial value
 	drawContext.rectangleShape.setRotation(initRotation);
 
-
-
-
 	return 0;
+}
+
+int DrawContext::text(lua_State *lua) {
+	DrawContext &drawContext = DrawContext::getInstance();
 }
 
 // Set up a library mapping from C++ to Lua.
