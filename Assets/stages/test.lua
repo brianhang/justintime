@@ -22,7 +22,8 @@ end
 -- Called every frame to update the state of the stage.
 function stage:update(deltaTime)
     print(self.i)
-    self.i = self.i + (15 * deltaTime)
+    self.i = self.i + (30 * deltaTime)
+
 end
 
 -- Called every frame to draw stuff to the screen.
@@ -35,9 +36,13 @@ function stage:draw()
     draw.setRotation(45)
     draw.setColor(255, 50, 50, 125)
     draw.rectangle(self.i, 60+math.cos(self.i*0.2)*30, 128, 128)
-    draw.line(200,240,math.cos(self.i)*960,math.sin(self.i)*720)
-    draw.line(400,240,-math.cos(self.i)*960,math.sin(self.i)*720)
-  
+    draw.line(320,240,math.cos(self.i)*960,math.sin(self.i)*720)
+    draw.text(200-self.i, 300-self.i, "Biblioteca", "pressstart2p", self.i)
+end
+
+-- Called when the stage has ended.
+function stage:exit()
+    print("Wow")
 end
 
 printTable()

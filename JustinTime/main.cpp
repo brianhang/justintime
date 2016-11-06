@@ -15,10 +15,11 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(640, 480), "SFML Test");
     window.setFramerateLimit(60);
 
-    DrawContext::getInstance().setWindow(&window);
+    DrawContext &drawContext = DrawContext::getInstance();
+    drawContext.setWindow(&window);
 
 	// Stage director to handle stages within a game.
-	StageDirector director;
+    StageDirector &director = StageDirector::getInstance();
     director.setStage(new LuaStage("stages/test.lua"));
 
 	// Game loop.
@@ -41,6 +42,10 @@ int main() {
 		// Update and draw the current state.
         window.clear();
 		
+        // Prepare the DrawContext for the next state.
+        drawContext.reset();
+
+        // Update and draw the current state of the game.
 		director.update(deltaTime);
 		director.draw(window);
 

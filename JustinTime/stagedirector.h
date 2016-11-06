@@ -10,11 +10,15 @@ class StageDirector {
 		// The current stage.
         std::unique_ptr<Stage> stage;
 
-	public:
-		StageDirector();
+        // The stage that we should change to.
+        std::unique_ptr<Stage> nextStage;
 
-		// Changes the current stage.
-		void setStage(Stage *newStage);
+	public:
+        // Returns the singleton instance of the director.
+        static StageDirector &getInstance();
+
+		// Changes the stage for the next frame.
+		void setStage(Stage *nextStage);
 
 		// Updates the current stage.
 		void update(float deltaTime);
@@ -24,5 +28,8 @@ class StageDirector {
 
 		// Draws the current stage.
 		void draw(sf::RenderWindow &window);
+
+        // Returns whether or not a next stage was set.
+        bool isChangingStage();
 };
 

@@ -1,7 +1,8 @@
-#include "drawcontext.h"
 #include <cmath>
+#include <iostream>
+#include "drawcontext.h"
 
-#define RAD2DEG (180.0f/3.14159265f)
+#define RAD2DEG (180.0f / 3.14159265f)
 
 DrawContext::DrawContext() { }
 
@@ -236,8 +237,53 @@ int DrawContext::line(lua_State *lua) {
 	return 0;
 }
 
+
+/* 
+ * Lua Function: draw.text(x, y, string, font)
+ * Description:	 Draws the string beginning at x,y with the given font
+ * Parameters:	 x - the x-coordinate of the starting point
+ *				 y - the y-coordinate of the starting point 
+ *				 string - piece of text that is drawn
+ *				 font - font of the text
+ * Returns:      None.
+ */
 int DrawContext::text(lua_State *lua) {
 	DrawContext &drawContext = DrawContext::getInstance();
+
+	// Check if window to draw onto exists
+	if (!drawContext.window) {
+		return 0;
+	}
+
+	// Get the parameters of the function.
+	float x = (float)luaL_checknumber(lua, 1);
+	float y = (float)luaL_checknumber(lua, 2);
+	std::string text(luaL_checkstring(lua, 3));
+	std::string fontName(luaL_checkstring(lua, 4));
+	unsigned int size = (unsigned int)luaL_checknumber(lua, 5);
+
+	std::unordered_map<std::string, sf::Font>::const_iterator it;
+	it = drawContext.fontMap.find(fontName);
+
+	if (it == drawContext.fontMap.end()) {
+		sf::Font font;
+
+		if (font.loadFromFile("fonts/" + fontName + ".ttf")) {
+			std::cerr << fontName << " could not be found!" << std::endl;
+		}
+	
+		drawContext.fontMap[fontName] = font;
+	}
+
+	drawContext.textShape.setPosition(x, y);
+	drawContext.textShape.setString(text);
+	drawContext.textShape.setFont(drawContext.fontMap[fontName]);
+	drawContext.textShape.setCharacterSize(size);
+	
+
+	drawContext.window->draw(drawContext.textShape);
+
+	return 0;
 }
 
 // Set up a library mapping from C++ to Lua.
@@ -249,6 +295,7 @@ static const luaL_Reg draw[] = {
     {"rectangle", DrawContext::rectangle},
     {"polygon", DrawContext::polygon},
     {"line", DrawContext::line},
+	{"text", DrawContext::text},
     {0, 0} // Sentinel
 };
 
@@ -256,4 +303,9 @@ void DrawContext::bind(lua_State *lua) {
     // Create the draw library with the DrawContext functions.
     luaL_newlib(lua, draw);
     lua_setglobal(lua, "draw");
+}
+
+void DrawContext::reset() {
+    rectangleShape.setRotation(0);
+    polygonShape.setRotation(0);
 }

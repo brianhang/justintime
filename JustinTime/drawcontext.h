@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
+#include <unordered_map>
 #include "lua/lua.hpp"
 
 class DrawContext {
@@ -12,8 +12,14 @@ class DrawContext {
         // A generic polygon to draw polygon shapes.
         sf::CircleShape polygonShape;
 
+		// A shape for drawing text.
+		sf::Text textShape;
+
         // RenderWindow for drawing shapes.
         sf::RenderWindow *window;
+
+		// Hashmap for storing fonts
+		std::unordered_map<std::string, sf::Font> fontMap;
 
     public:
         // Empty constructor.
@@ -46,9 +52,12 @@ class DrawContext {
         // Draws a line from (x1, y1) to (x2, y2).
         static int line(lua_State *lua);
 
-		// Draws text beginning at (x, y).
+		// Draws text beginning at (x, y) using a given string and font.
 		static int text(lua_State *lua);
 
         // Sets up Lua bindings for drawing shapes using a DrawingContext.
         void bind(lua_State *lua);
+
+        // Reset some states for drawing the next frame.
+        void reset();
 };
