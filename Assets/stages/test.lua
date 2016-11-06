@@ -2,6 +2,10 @@
 
 -- "stage" is a table that contains information about the current stage.
 
+draw.createFont("test1", "pressstart2p.ttf", 20)
+draw.createFont("test2", "pressstart2p.ttf", 30)
+draw.createFont("test3", "pressstart2p.ttf", 40)
+
 -- Called when the stage starts.
 function stage:init()
     print("Started test stage")
@@ -37,7 +41,7 @@ function stage:draw()
     draw.setColor(255, 50, 50, 125)
     draw.rectangle(self.i, 60+math.cos(self.i*0.2)*30, 128, 128)
     draw.line(320,240,math.cos(self.i)*960,math.sin(self.i)*720)
-    draw.text(200-self.i, 300-self.i, "Biblioteca", "pressstart2p", 10)
+    draw.text(200-self.i, 300-self.i, "Biblioteca", "test"..math.floor((self.i % 3) + 1), 10)
 end
 
 -- Called when the stage has ended.

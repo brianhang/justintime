@@ -2,7 +2,25 @@
 #include <iostream>
 #include "drawcontext.h"
 
+#if _DEBUG
+#include "debug_stackdump.h"
+#endif
+
 #define RAD2DEG (180.0f / 3.14159265f)
+
+static inline void setFontProperty(lua_State *lua, unsigned int &flags,
+const char *name, int style) {
+    int top = lua_gettop(lua);
+
+    lua_pushstring(lua, name);
+    lua_gettable(lua, 4 - top);
+
+    if (!lua_isnoneornil(lua, top)) {
+        flags |= style;
+    }
+
+    lua_pop(lua, 1);
+}
 
 DrawContext::DrawContext() { }
 
@@ -237,9 +255,63 @@ int DrawContext::line(lua_State *lua) {
 	return 0;
 }
 
-
+/*
+ * Lua Function: draw.createFont(name, fontName, size, style)
+ * Description:  Sets up a font to be used for drawing text.
+ * Parameters:   name - a string identifier for the font
+ *               fontName - the file that contains the font
+ *               size - the height of each character
+ *               style - a table containing style properties for the font
+ */
 int DrawContext::createFont(lua_State *lua) {
-	
+    DrawContext &drawContext = DrawContext::getInstance();
+
+    // Get the parameters.
+    std::string name(luaL_checkstring(lua, 1));
+    std::string fontName(luaL_checkstring(lua, 2));
+    unsigned int size = (unsigned int) luaL_checknumber(lua, 3);
+    unsigned int style = sf::Text::Style::Regular;
+    int top = lua_gettop(lua);
+
+    // Set the font flags to match the values of the style table.
+    if (top > 3) {
+        setFontProperty(lua, style, "bold", sf::Text::Style::Bold);
+        setFontProperty(lua, style, "italic", sf::Text::Style::Italic);
+        setFontProperty(lua, style, "underlined", sf::Text::Style::Underlined);
+        setFontProperty(lua, style, "strikeThrough",
+                        sf::Text::Style::StrikeThrough);
+    }
+
+    // Remove duplicate entry for the font.
+    TextMap::const_iterator it = drawContext.textMap.find(name);
+
+    if (it != drawContext.textMap.end()) {
+        drawContext.textMap.erase(it);
+    }
+
+    // Get the font to use from the font name.
+    FontMap::const_iterator fontIt = drawContext.fontMap.find(fontName);
+
+    if (fontIt == drawContext.fontMap.end()) {
+        sf::Font font;
+
+        if (!font.loadFromFile("fonts/" + fontName)) {
+            std::cerr << "Failed to load font \"" << fontName << "\" from disk!"
+                << std::endl;
+
+            return 0;
+        }
+
+        drawContext.fontMap[fontName] = font;
+    }
+
+    // Add a text object that holds the font to the font map.
+    sf::Text text("", drawContext.fontMap[fontName], size);
+    text.setStyle(style);
+
+    drawContext.textMap[name] = text;
+
+    return 0;
 }
 
 /* 
@@ -264,39 +336,31 @@ int DrawContext::text(lua_State *lua) {
 	float y = (float)luaL_checknumber(lua, 2);
 	std::string text(luaL_checkstring(lua, 3));
 	std::string fontName(luaL_checkstring(lua, 4));
-	unsigned int size = (unsigned int)luaL_checknumber(lua, 5);
 
-	// Create a hash map for the font
-	std::unordered_map<std::string, sf::Font>::const_iterator it;
-	it = drawContext.fontMap.find(fontName);
+    // Check if the font exists.
+    TextMap::const_iterator it = drawContext.textMap.find(fontName);
 
-	// Check if font is in the hashmap already
-	if (it == drawContext.fontMap.end()) {
-		sf::Font font;
+    if (it == drawContext.textMap.end()) {
+        lua_pushstring(lua, (fontName + " is not a valid font").c_str());
+        lua_error(lua);
 
-		// Load the font from file
-		if (font.loadFromFile("fonts/" + fontName + ".ttf")) {
-			std::cerr << fontName << " could not be found!" << std::endl;
-		}
-	
-		// Set font in the hashmap
-		drawContext.fontMap[fontName] = font;
-	}
+        return 0;
+    }
 
-	// Set the parameters of the text
-	drawContext.textShape.setPosition(x, y);
-	drawContext.textShape.setString(text);
-	drawContext.textShape.setFont(drawContext.fontMap[fontName]);
-	drawContext.textShape.setCharacterSize(size);
-	
-	// Draw text
-	drawContext.window->draw(drawContext.textShape);
+    // Draw the shape with the given properties.
+    sf::Text &textShape = drawContext.textMap[fontName];
+
+    textShape.setPosition(x, y);
+    textShape.setString(text);
+
+    drawContext.window->draw(textShape);
 
 	return 0;
 }
 
 // Set up a library mapping from C++ to Lua.
 static const luaL_Reg draw[] = {
+    {"createFont", DrawContext::createFont},
     {"setColor", DrawContext::setColor},
     {"setOutlineColor", DrawContext::setOutlineColor},
     {"setOutlineThickness", DrawContext::setOutlineThickness},

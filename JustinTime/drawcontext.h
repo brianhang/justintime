@@ -4,7 +4,8 @@
 #include <unordered_map>
 #include "lua/lua.hpp"
 
-typedef std::unordered_map<std::string, sf::Text> FontMap;
+typedef std::unordered_map<std::string, sf::Text> TextMap;
+typedef std::unordered_map<std::string, sf::Font> FontMap;
 
 class DrawContext {
     private:
@@ -17,8 +18,9 @@ class DrawContext {
         // RenderWindow for drawing shapes.
         sf::RenderWindow *window;
 
-		// Hashmap for storing fonts
-		FontMap fontMap;
+		// Maps for storing texts and fonts.
+		TextMap textMap;
+        FontMap fontMap;
 
     public:
         // Empty constructor.
