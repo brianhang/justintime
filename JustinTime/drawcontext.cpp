@@ -1,4 +1,7 @@
 #include "drawcontext.h"
+#include <cmath>
+
+#define RAD2DEG (180.0f/3.14159265f)
 
 DrawContext::DrawContext() { }
 
@@ -131,7 +134,43 @@ int DrawContext::polygon(lua_State *lua) {
  * Returns:      None.
  */
 int DrawContext::line(lua_State *lua) {
-    return 0;
+	DrawContext &drawContext = DrawContext::getInstance();
+	
+	// if window doesn't exist
+	if (!drawContext.window) {
+		return 0;
+	}
+
+	// save initial rectangle rotation
+	float initRotation = drawContext.rectangleShape.getRotation();
+
+	// parameters of the line
+	float x1 = (float)luaL_checknumber(lua, 1);
+	float y1 = (float)luaL_checknumber(lua, 2);
+	float x2 = (float)luaL_checknumber(lua, 3);
+	float y2 = (float)luaL_checknumber(lua, 4);
+
+	// Pythag to find length of line
+	float xDelta = x2 - x1;
+	float yDelta = y2 - y1;
+	float width = sqrt((xDelta * xDelta) + (yDelta * yDelta));
+
+	// set length of line
+	drawContext.rectangleShape.setPosition(x1, y1);
+	drawContext.rectangleShape.setSize(sf::Vector2f(width, 1));
+
+	// rotate to correct spot
+	drawContext.rectangleShape.rotate(RAD2DEG * atan2(yDelta, xDelta));
+	// draw the line
+	drawContext.window->draw(drawContext.rectangleShape);
+
+	//set rotation back to its initial value
+	drawContext.rectangleShape.setRotation(initRotation);
+
+
+
+
+	return 0;
 }
 
 // Set up a library mapping from C++ to Lua.
