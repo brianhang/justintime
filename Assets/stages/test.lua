@@ -37,7 +37,7 @@ function stage:draw()
     draw.setColor(255, 50, 50, 125)
     draw.rectangle(self.i, 60+math.cos(self.i*0.2)*30, 128, 128)
     draw.line(320,240,math.cos(self.i)*960,math.sin(self.i)*720)
-    draw.text(200-self.i, 300-self.i, "Biblioteca", "pressstart2p", self.i)
+    draw.text(200-self.i, 300-self.i, "Biblioteca", "pressstart2p", 10)
 end
 
 -- Called when the stage has ended.

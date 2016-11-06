@@ -238,14 +238,17 @@ int DrawContext::line(lua_State *lua) {
 }
 
 
+int DrawContext::createFont(lua_State *lua) {
+	
+}
+
 /* 
- * Lua Function: draw.text(x, y, string, font, size)
+ * Lua Function: draw.text(x, y, string, font)
  * Description:	 Draws the string beginning at x,y with the given font
  * Parameters:	 x - the x-coordinate of the starting point
  *				 y - the y-coordinate of the starting point 
  *				 string - piece of text that is drawn
  *				 font - font of the text
- *				 size - size of text
  * Returns:      None.
  */
 int DrawContext::text(lua_State *lua) {
