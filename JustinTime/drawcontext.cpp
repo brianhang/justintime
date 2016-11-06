@@ -1,7 +1,8 @@
-#include "drawcontext.h"
 #include <cmath>
 
-#define RAD2DEG (180.0f/3.14159265f)
+#include "drawcontext.h"
+
+#define RAD2DEG (180.0f / 3.14159265f)
 
 DrawContext::DrawContext() { }
 
@@ -233,9 +234,6 @@ int DrawContext::line(lua_State *lua) {
 	//set rotation back to its initial value
 	drawContext.rectangleShape.setRotation(initRotation);
 
-
-
-
 	return 0;
 }
 
@@ -255,4 +253,9 @@ void DrawContext::bind(lua_State *lua) {
     // Create the draw library with the DrawContext functions.
     luaL_newlib(lua, draw);
     lua_setglobal(lua, "draw");
+}
+
+void DrawContext::reset() {
+    rectangleShape.setRotation(0);
+    polygonShape.setRotation(0);
 }

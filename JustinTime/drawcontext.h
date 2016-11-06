@@ -48,4 +48,7 @@ class DrawContext {
 
         // Sets up Lua bindings for drawing shapes using a DrawingContext.
         void bind(lua_State *lua);
+
+        // Reset some states for drawing the next frame.
+        void reset();
 };
