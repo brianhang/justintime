@@ -3,13 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 class Stage {
-	friend class StageDirector;
-
-	protected:
-		// Sets which stage the director should change to.
-		Stage *nextStage = nullptr;
-		void setNextStage(Stage *stage);
-
 	public:
 		virtual ~Stage() { };
 
@@ -20,5 +13,5 @@ class Stage {
 		virtual void draw(sf::RenderWindow &window) = 0;
 
 		// Called when an event was received.
-		virtual void onEvent(const sf::Event &e);
+		virtual void onEvent(const sf::Event &e) = 0;
 };

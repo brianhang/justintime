@@ -17,11 +17,9 @@ int main() {
 
     DrawContext::getInstance().setWindow(&window);
 
-    LuaStage *luaStage = new LuaStage("stages/test.lua");
-
 	// Stage director to handle stages within a game.
 	StageDirector director;
-	director.setStage(luaStage);
+    director.setStage(new LuaStage("stages/test.lua"));
 
 	// Game loop.
     while (window.isOpen()) {

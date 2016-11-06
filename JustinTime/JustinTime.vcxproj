@@ -154,7 +154,6 @@
     <ClCompile Include="lua\lzio.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menustage.cpp" />
-    <ClCompile Include="stage.cpp" />
     <ClCompile Include="stagedirector.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,7 +187,6 @@
     <ClInclude Include="lua\lzio.h" />
     <ClInclude Include="menustage.h" />
     <ClInclude Include="stage.h" />
-    <ClInclude Include="stage1.h" />
     <ClInclude Include="stagedirector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

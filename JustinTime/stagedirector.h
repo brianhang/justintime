@@ -1,19 +1,20 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <memory>
+
 #include "stage.h"
 
 class StageDirector {
 	private:
 		// The current stage.
-		Stage *stage;
+        std::unique_ptr<Stage> stage;
 
 	public:
 		StageDirector();
-		~StageDirector();
 
 		// Changes the current stage.
-		void setStage(Stage *nextStage);
+		void setStage(Stage *newStage);
 
 		// Updates the current stage.
 		void update(float deltaTime);
@@ -23,8 +24,5 @@ class StageDirector {
 
 		// Draws the current stage.
 		void draw(sf::RenderWindow &window);
-
-		// Deletes and cleans up the current stage.
-		void destroyStage();
 };
 
