@@ -157,6 +157,7 @@
     <ClCompile Include="stagedirector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="debug_stackdump.h" />
     <ClInclude Include="drawcontext.h" />
     <ClInclude Include="luastage.h" />
     <ClInclude Include="lua\lapi.h" />
