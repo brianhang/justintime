@@ -1,6 +1,11 @@
 #include <iostream>
 
+#include "stagedirector.h"
 #include "luastage.h"
+
+static int emptyLuaFunction(lua_State *lua) {
+    return 0;
+}
 
 static void stackDump(lua_State *L) {
     int i;
@@ -91,12 +96,47 @@ lua(nullptr) {
 void LuaStage::setupLuaStage() {
     lua_newtable(lua);
     lua_setglobal(lua, "stage");
+
+    // Add the stage:setNextStage(nextStage) function.
+    lua_getglobal(lua, "stage");
+    lua_pushcfunction(lua, LuaStage::setNextStage);
+    lua_setfield(lua, -2, "setNextStage");
 }
 
 LuaStage::~LuaStage() {
     if (lua) {
         lua_close(lua);
     }
+}
+
+int LuaStage::setNextStage(lua_State *lua) {
+    // Make sure a "self" was specified.
+    luaL_checktype(lua, 1, LUA_TTABLE);
+
+    // Call the stage:exit() function.
+    lua_pushstring(lua, "exit");
+    lua_gettable(lua, -3);
+
+    if (lua_isfunction(lua, -1)) {
+        lua_getglobal(lua, "stage");
+        lua_call(lua, 1, 0);
+    } else {
+        lua_pop(lua, 1);
+    }
+
+    // Get the Lua script for the next stage.
+    std::string nextStage(luaL_checkstring(lua, 2));
+    nextStage = "stages/" + nextStage + ".lua";
+
+    // Do not allow future stage changes.
+    lua_getglobal(lua, "stage");
+    lua_pushcfunction(lua, emptyLuaFunction);
+    lua_setfield(lua, -2, "setNextStage");
+
+    // Switch the stage.
+    StageDirector::getInstance().setStage(new LuaStage(nextStage));
+
+    return 0;
 }
 
 void LuaStage::printError() {
@@ -167,5 +207,9 @@ void LuaStage::update(float deltaTime) {
 }
 
 void LuaStage::onEvent(const sf::Event &e) {
+
+}
+
+void LuaStage::onLeave() {
 
 }

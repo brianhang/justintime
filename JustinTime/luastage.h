@@ -4,9 +4,22 @@
 #include "drawcontext.h"
 #include "lua/lua.hpp"
 
+#include <memory>
+
 class LuaStage : public Stage {
     private:
+        std::string nextStage;
+
         lua_State *lua;
+
+        // Lua function to change the current stage.
+        static int setNextStage(lua_State *lua);
+
+        // Sets up the Stage API for Lua scripts.
+        void setupLuaStage();
+
+        // Prints the last Lua error.
+        void printError();
 
     public:
         // LuaStage constructor.
@@ -24,9 +37,6 @@ class LuaStage : public Stage {
         // Handles events for the game.
         void onEvent(const sf::Event &e);
 
-        // Prints the last Lua error.
-        void printError();
-
-        // Sets up the Stage API for Lua scripts.
-        void setupLuaStage();
+        // Called when the stage is being changed to another.
+        void onLeave();
 };
