@@ -275,6 +275,7 @@ int DrawContext::createFont(lua_State *lua) {
 
     // Set the font flags to match the values of the style table.
     if (top > 3) {
+
         setFontProperty(lua, style, "bold", sf::Text::Style::Bold);
         setFontProperty(lua, style, "italic", sf::Text::Style::Italic);
         setFontProperty(lua, style, "underlined", sf::Text::Style::Underlined);
