@@ -117,6 +117,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="actor.cpp" />
     <ClCompile Include="drawcontext.cpp" />
     <ClCompile Include="luastage.cpp" />
     <ClCompile Include="lua\lapi.c" />
@@ -154,11 +155,30 @@
     <ClCompile Include="lua\lzio.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menustage.cpp" />
+    <ClCompile Include="stagecast.cpp" />
     <ClCompile Include="stagedirector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="actor.h" />
     <ClInclude Include="debug_stackdump.h" />
     <ClInclude Include="drawcontext.h" />
+    <ClInclude Include="luabridge\detail\CFunctions.h" />
+    <ClInclude Include="luabridge\detail\ClassInfo.h" />
+    <ClInclude Include="luabridge\detail\Constructor.h" />
+    <ClInclude Include="luabridge\detail\dump.h" />
+    <ClInclude Include="luabridge\detail\FuncTraits.h" />
+    <ClInclude Include="luabridge\detail\Iterator.h" />
+    <ClInclude Include="luabridge\detail\LuaException.h" />
+    <ClInclude Include="luabridge\detail\LuaHelpers.h" />
+    <ClInclude Include="luabridge\detail\LuaRef.h" />
+    <ClInclude Include="luabridge\detail\Namespace.h" />
+    <ClInclude Include="luabridge\detail\Stack.h" />
+    <ClInclude Include="luabridge\detail\TypeList.h" />
+    <ClInclude Include="luabridge\detail\TypeTraits.h" />
+    <ClInclude Include="luabridge\detail\Userdata.h" />
+    <ClInclude Include="luabridge\LuaBridge.h" />
+    <ClInclude Include="luabridge\RefCountedObject.h" />
+    <ClInclude Include="luabridge\RefCountedPtr.h" />
     <ClInclude Include="luastage.h" />
     <ClInclude Include="lua\lapi.h" />
     <ClInclude Include="lua\lauxlib.h" />
@@ -188,6 +208,7 @@
     <ClInclude Include="lua\lzio.h" />
     <ClInclude Include="menustage.h" />
     <ClInclude Include="stage.h" />
+    <ClInclude Include="stagecast.h" />
     <ClInclude Include="stagedirector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
