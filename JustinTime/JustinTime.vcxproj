@@ -124,19 +124,15 @@
   <ItemGroup>
     <ClCompile Include="justintime.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="stage\actor.cpp" />
     <ClCompile Include="stage\menu\menustage.cpp" />
-    <ClCompile Include="stage\stagecast.cpp" />
     <ClCompile Include="stage\stagedirector.cpp" />
     <ClCompile Include="stage\wakeup\wakeupeyes.cpp" />
     <ClCompile Include="stage\wakeup\wakeupstage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="justintime.h" />
-    <ClInclude Include="stage\actor.h" />
     <ClInclude Include="stage\menu\menustage.h" />
     <ClInclude Include="stage\stage.h" />
-    <ClInclude Include="stage\stagecast.h" />
     <ClInclude Include="stage\stagedirector.h" />
     <ClInclude Include="stage\wakeup\wakeupeyes.h" />
     <ClInclude Include="stage\wakeup\wakeupstage.h" />
