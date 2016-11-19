@@ -10,15 +10,15 @@ class StageDirector {
 		// The current stage.
         std::unique_ptr<Stage> stage;
 
-        // The stage that we should change to.
-        std::unique_ptr<Stage> nextStage;
-
 	public:
         // Returns the singleton instance of the director.
         static StageDirector &getInstance();
 
 		// Changes the stage for the next frame.
-		void setStage(Stage *nextStage);
+        template<typename T>
+        void setStage() {
+            stage.reset(new T());
+        }
 
 		// Updates the current stage.
 		void update(float deltaTime);

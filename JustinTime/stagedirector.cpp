@@ -6,11 +6,6 @@ StageDirector &StageDirector::getInstance() {
     return instance;
 }
 
-void StageDirector::setStage(Stage *newStage) {
-    // Change what the next stage is.
-    nextStage.reset(newStage);
-}
-
 void StageDirector::draw(sf::RenderWindow &window) {
     // Delegate drawing to the current stage.
 	if (stage.get()) {
@@ -18,23 +13,7 @@ void StageDirector::draw(sf::RenderWindow &window) {
 	}
 }
 
-bool StageDirector::isChangingStage() {
-    return nextStage.get() != nullptr;
-}
-
 void StageDirector::update(float deltaTime) {
-    if (nextStage.get()) {
-        // A stage change is requested, so notify the current stage.
-        if (stage.get()) {
-            stage->onLeave();
-        }
-
-        // Set the current stage to be the next stage.
-        stage = std::move(nextStage);
-
-        return;
-    }
-
     // Update the current stage.
 	if (stage.get()) {
         stage->update(deltaTime);

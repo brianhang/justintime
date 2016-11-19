@@ -7,14 +7,14 @@ using namespace sf;
 MenuStage::MenuStage() {
 	time = 0.0f;
 
-	if (face.loadFromFile("res/textures/justin.png")) {
+	if (face.loadFromFile("textures/justin.png")) {
 		centerFace.setTexture(face);
 		centerFace.setScale(sf::Vector2f(3.0f, 3.0f));
 		centerFace.setPosition(sf::Vector2f(320.0f, 240.0f));
 		centerFace.setOrigin(sf::Vector2f(34.0f, 43.5f));
 	}
 
-	if (font.loadFromFile("res/fonts/pressstart2p.ttf")) {
+	if (font.loadFromFile("fonts/pressstart2p.ttf")) {
 		title.setFont(font);
 		title.setString("JUSTIN TIME");
 		title.setPosition(sf::Vector2f(320.0f, 120.0f));

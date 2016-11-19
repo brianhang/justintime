@@ -14,7 +14,4 @@ class Stage {
 
 		// Called when an event was received.
 		virtual void onEvent(const sf::Event &e) = 0;
-
-        // Called when the stage is being changed to another.
-        virtual void onLeave() = 0;
 };
