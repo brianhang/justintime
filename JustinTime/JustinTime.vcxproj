@@ -125,6 +125,8 @@
     <ClCompile Include="justintime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stage\actor.cpp" />
+    <ClCompile Include="stage\lecture\lecturestage.cpp" />
+    <ClCompile Include="stage\lecture\lecturewords.cpp" />
     <ClCompile Include="stage\menu\menustage.cpp" />
     <ClCompile Include="stage\stagecast.cpp" />
     <ClCompile Include="stage\stagedirector.cpp" />
@@ -134,6 +136,8 @@
   <ItemGroup>
     <ClInclude Include="justintime.h" />
     <ClInclude Include="stage\actor.h" />
+    <ClInclude Include="stage\lecture\lecturestage.h" />
+    <ClInclude Include="stage\lecture\lecturewords.h" />
     <ClInclude Include="stage\menu\menustage.h" />
     <ClInclude Include="stage\stage.h" />
     <ClInclude Include="stage\stagecast.h" />
