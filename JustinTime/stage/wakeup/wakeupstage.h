@@ -1,7 +1,7 @@
 #pragma once
 
-#include "stage/stage.h"
-#include "stage/wakeup/wakeupeyes.h"
+#include "../stage.h"
+#include "wakeupeyes.h"
 
 class WakeUpStage : public Stage {
     private:
