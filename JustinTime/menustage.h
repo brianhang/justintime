@@ -7,6 +7,7 @@ class MenuStage : public Stage {
 	private:
 		sf::Texture face;
 		sf::Sprite centerFace;
+        sf::RectangleShape fade;
 		sf::Text title;
 		sf::Font font;
 

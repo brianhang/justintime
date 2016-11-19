@@ -128,6 +128,8 @@
     <ClCompile Include="menustage.cpp" />
     <ClCompile Include="stagecast.cpp" />
     <ClCompile Include="stagedirector.cpp" />
+    <ClCompile Include="wakeupeyes.cpp" />
+    <ClCompile Include="wakeupstage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h" />
@@ -136,6 +138,8 @@
     <ClInclude Include="stage.h" />
     <ClInclude Include="stagecast.h" />
     <ClInclude Include="stagedirector.h" />
+    <ClInclude Include="wakeupeyes.h" />
+    <ClInclude Include="wakeupstage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

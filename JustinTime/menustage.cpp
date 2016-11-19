@@ -7,6 +7,9 @@ using namespace sf;
 MenuStage::MenuStage() {
 	time = 0.0f;
 
+    fade.setSize(sf::Vector2f(640.0f, 480.0f));
+    fade.setFillColor(sf::Color::White);
+
 	if (face.loadFromFile("textures/justin.png")) {
 		centerFace.setTexture(face);
 		centerFace.setScale(sf::Vector2f(3.0f, 3.0f));
@@ -27,6 +30,8 @@ void MenuStage::update(float deltaTime) {
 	time += deltaTime;
 
 	centerFace.setRotation(sin(time * 5.0f) * 30.0f);
+
+    fade.setFillColor(fade.getFillColor() * sf::Color(255, 255, 255, 253));
 }
 
 void MenuStage::onEvent(const sf::Event &e) {
@@ -51,4 +56,8 @@ void MenuStage::draw(sf::RenderWindow &window) {
 		title.setFillColor(sf::Color(brightness, brightness, brightness));
 		window.draw(title);
 	}
+
+    if (fade.getFillColor().a > 0.0f) {
+        window.draw(fade);
+    }
 }

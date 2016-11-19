@@ -1,7 +1,6 @@
 #pragma once
 
 #include "stagedirector.h"
-#include "menustage.h"
 
 #include <SFML/Graphics.hpp>
 

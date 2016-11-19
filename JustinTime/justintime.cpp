@@ -1,6 +1,9 @@
 #include "justintime.h"
 #include <stdlib.h>
 
+#include "wakeupstage.h"
+#include "menustage.h"
+
 JustinTime::JustinTime() : director(StageDirector::getInstance()) {
     // Set the random seed to the current time to randomize values.
     srand((unsigned int)time(NULL));
@@ -12,7 +15,7 @@ void JustinTime::run(const std::string &title, int width, int height) {
     window.setFramerateLimit(60);
 
     // Stage director to handle stages within a game.
-    director.setStage<MenuStage>();
+    director.setStage<WakeUpStage>();
 
     // Game loop.
     while (window.isOpen()) {
