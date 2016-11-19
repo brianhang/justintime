@@ -1,8 +1,8 @@
 #include "justintime.h"
 #include <stdlib.h>
 
-#include "wakeupstage.h"
-#include "menustage.h"
+#include "stage/wakeup/wakeupstage.h"
+#include "stage/menu/menustage.h"
 
 JustinTime::JustinTime() : director(StageDirector::getInstance()) {
     // Set the random seed to the current time to randomize values.

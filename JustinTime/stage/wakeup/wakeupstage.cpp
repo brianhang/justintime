@@ -1,6 +1,6 @@
 #include "wakeupstage.h"
-#include "stagedirector.h"
-#include "menustage.h"
+#include "../stagedirector.h"
+#include "../menu/menustage.h"
 
 WakeUpStage::WakeUpStage() : eyes(0.01f) { }
 
