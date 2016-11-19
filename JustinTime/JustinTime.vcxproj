@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="actor.cpp" />
+    <ClCompile Include="justintime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menustage.cpp" />
     <ClCompile Include="stagecast.cpp" />
@@ -130,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h" />
+    <ClInclude Include="justintime.h" />
     <ClInclude Include="menustage.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="stagecast.h" />
