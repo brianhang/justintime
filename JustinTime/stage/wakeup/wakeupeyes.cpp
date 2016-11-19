@@ -2,7 +2,7 @@
 #include <iostream>
 
 WakeUpEyes::WakeUpEyes(float newTiredness) {
-    const sf::Vector2f eyeSize(640.0f, 238.0f);
+    const sf::Vector2f eyeSize(640.0f, 239.0f);
 
     background.setSize(sf::Vector2f(640.0f, 480.0f));
     background.setFillColor(sf::Color::White);
@@ -16,7 +16,7 @@ WakeUpEyes::WakeUpEyes(float newTiredness) {
     sleepiness = 1.0f;
     tiredness = newTiredness;
 
-    bottom.setPosition(0.0f, 480.0f);
+    bottom.setPosition(0.0f, 481.0f);
     bottom.setOrigin(0.0f, 240.0f);
 }
 
