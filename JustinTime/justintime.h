@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stagedirector.h"
+#include "stage/stagedirector.h"
 
 #include <SFML/Graphics.hpp>
 

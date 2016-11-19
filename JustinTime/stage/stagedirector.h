@@ -28,8 +28,5 @@ class StageDirector {
 
 		// Draws the current stage.
 		void draw(sf::RenderWindow &window);
-
-        // Returns whether or not a next stage was set.
-        bool isChangingStage();
 };
 

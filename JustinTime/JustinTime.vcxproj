@@ -122,24 +122,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="actor.cpp" />
     <ClCompile Include="justintime.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="menustage.cpp" />
-    <ClCompile Include="stagecast.cpp" />
-    <ClCompile Include="stagedirector.cpp" />
-    <ClCompile Include="wakeupeyes.cpp" />
-    <ClCompile Include="wakeupstage.cpp" />
+    <ClCompile Include="stage\actor.cpp" />
+    <ClCompile Include="stage\menu\menustage.cpp" />
+    <ClCompile Include="stage\stagecast.cpp" />
+    <ClCompile Include="stage\stagedirector.cpp" />
+    <ClCompile Include="stage\wakeup\wakeupeyes.cpp" />
+    <ClCompile Include="stage\wakeup\wakeupstage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="actor.h" />
     <ClInclude Include="justintime.h" />
-    <ClInclude Include="menustage.h" />
-    <ClInclude Include="stage.h" />
-    <ClInclude Include="stagecast.h" />
-    <ClInclude Include="stagedirector.h" />
-    <ClInclude Include="wakeupeyes.h" />
-    <ClInclude Include="wakeupstage.h" />
+    <ClInclude Include="stage\actor.h" />
+    <ClInclude Include="stage\menu\menustage.h" />
+    <ClInclude Include="stage\stage.h" />
+    <ClInclude Include="stage\stagecast.h" />
+    <ClInclude Include="stage\stagedirector.h" />
+    <ClInclude Include="stage\wakeup\wakeupeyes.h" />
+    <ClInclude Include="stage\wakeup\wakeupstage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stage.h"
+#include "../stage.h"
 #include <vector>
 
 class MenuStage : public Stage {
