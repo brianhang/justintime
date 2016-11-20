@@ -22,6 +22,8 @@ CutsceneStage::CutsceneStage() {
         return;
     }
 
+    // Layout the dialog text.
+    dialogShape.setPosition(96.0f, 480.0f - (BAR_HEIGHT * 0.5f));
     dialogShape.setFont(dialogFont);
     dialogShape.setCharacterSize(8);
 
@@ -33,19 +35,17 @@ CutsceneStage::CutsceneStage() {
 
     bottom.setPosition(0.0f, 480.0f - BAR_HEIGHT);
 
-    // Set the color for the bars and the background.
+    // Set the color for the cinematic bars.
     top.setFillColor(sf::Color::Black);
     bottom.setFillColor(sf::Color::Black);
 
-    background.setSize(sf::Vector2f(640.0f, 480.0f));
-    background.setFillColor(sf::Color(125, 125, 125));
-
-    dialogShape.setPosition(96.0f, 480.0f - (BAR_HEIGHT * 0.5f));
-
+    // Layout the actor image.
     actor.setPosition(0.0f, 480.0f - BAR_HEIGHT);
     actor.setTextureRect(sf::IntRect(0, 0, 96, 96));
+}
 
-    if (dialog.load("scripts/test.txt")) {
+void CutsceneStage::load(const std::string &script) {
+    if (dialog.load(script)) {
         showLine();
     }
 }
@@ -64,12 +64,15 @@ void CutsceneStage::showLine() {
 }
 
 void CutsceneStage::update(float deltaTime) {
+    // Do nothing if the dialog is paused.
     if (paused) {
         return;
     }
 
+    // Draw the next character when needed.
     if ((skip || dialogTimer.getElapsedTime() >= sf::seconds(DIALOG_DELAY)) &&
         dialogTextIndex <= dialogText.size()) {
+        // Set the actor image if we started a new line.
         if (dialogTextIndex == 0) {
             CutsceneLine *line = dialog.getLine();
 
@@ -78,8 +81,10 @@ void CutsceneStage::update(float deltaTime) {
             }
         }
 
+        // Move to the next character.
         dialogTextIndex++;
 
+        // If there are no more characters, move to the next line.
         if (dialogTextIndex > dialogText.size()) {
             dialog.nextLine();
 
@@ -89,24 +94,30 @@ void CutsceneStage::update(float deltaTime) {
             return;
         }
 
+        // Set the string to reflect which the current typed string.
         dialogShape.setString(dialogText.substr(0, dialogTextIndex));
 
+        // Update the origin if there is a newline to support
+        // multiple lines.
         if (dialogText[dialogTextIndex - 1] == '\n') {
             sf::FloatRect bounds = dialogShape.getLocalBounds();
 
             dialogShape.setOrigin(0.0f, bounds.top + bounds.height * 0.5f);
         }
 
+        // Play a tick sound for the character.
         if (!skip) {
             tickSound.play();
         }
 
+        // Reset the dialog timer so the next character shows up after a delay.
         dialogTimer.restart();
     }
 }
 
 void CutsceneStage::draw(sf::RenderWindow &window) {
-    window.draw(background);
+    drawBackground(window);
+
     window.draw(top);
     window.draw(bottom);
     window.draw(actor);
@@ -114,6 +125,7 @@ void CutsceneStage::draw(sf::RenderWindow &window) {
 }
 
 void CutsceneStage::onEvent(const sf::Event &e) {
+    // If space is pressed, skip to the next character.
     if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Space) {
         skip = true;
         paused = false;
