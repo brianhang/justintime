@@ -40,14 +40,11 @@ CutsceneStage::CutsceneStage() {
     background.setSize(sf::Vector2f(640.0f, 480.0f));
     background.setFillColor(sf::Color(125, 125, 125));
 
-    setText("Lorem Ipsum is simply dummy text of the printing\n" \
-            "andtypesetting industry. Lorem Ipsum has been\n" \
-            "the industry's standard dummy text ever since the\n" \
-            "1500s, when an unknown printer took a galley of\n" \
-            "type and scrambled it to make a type\n" \
-            "specimen book.");
+    if (dialog.load("scripts/test.txt")) {
+        CutsceneLine *line = dialog.getLine();
 
-    dialog.load("scripts/test.txt");
+        setText(line->actor->name + ": " + line->line);
+    }
 }
 
 void CutsceneStage::setText(const std::string &text) {
@@ -61,9 +58,28 @@ void CutsceneStage::setText(const std::string &text) {
 }
 
 void CutsceneStage::update(float deltaTime) {
+    if (paused) {
+        return;
+    }
+
     if ((skip || dialogTimer.getElapsedTime() >= sf::seconds(DIALOG_DELAY)) &&
-        dialogTextIndex < dialogText.size()) {
+        dialogTextIndex <= dialogText.size()) {
         dialogTextIndex++;
+
+        if (dialogTextIndex > dialogText.size()) {
+            CutsceneLine *line = dialog.nextLine();
+
+            if (line) {
+                dialogText = line->actor->name + ": " + line->line;
+                dialogTextIndex = 0;
+                dialogTimer.restart();
+                
+                paused = true;
+            }
+
+            return;
+        }
+
         dialogShape.setString(dialogText.substr(0, dialogTextIndex));
 
         if (dialogTextIndex == 0 || dialogText[dialogTextIndex - 1] == '\n') {
@@ -90,6 +106,7 @@ void CutsceneStage::draw(sf::RenderWindow &window) {
 void CutsceneStage::onEvent(const sf::Event &e) {
     if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Space) {
         skip = true;
+        paused = false;
     } else if (e.type == sf::Event::KeyReleased &&
                e.key.code == sf::Keyboard::Space) {
         skip = false;

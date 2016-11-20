@@ -2,7 +2,7 @@
 @2;Abraham Lincoln;textures/lincoln.png
 #@3;Brian;textures/brian.png wow
 
-2 Hello, Justin.
+2 Hello, Justin. It's me
 1 Abraham Lincoln?
 2 Yes, it's me. I'm here to help you succeed.
 1 How? I'm a dingus.

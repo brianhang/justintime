@@ -25,6 +25,7 @@ class CutsceneStage : public Stage {
         unsigned int dialogTextIndex;
         
         bool skip;
+        bool paused;
 
     public:
         CutsceneStage();
