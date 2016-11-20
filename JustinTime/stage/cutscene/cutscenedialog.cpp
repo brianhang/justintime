@@ -23,10 +23,20 @@ bool CutsceneDialog::load(const std::string &script) {
                 // Add the actor if found.
                 if (std::regex_search(scriptLine, match, re) &&
                     match.size() > 1) {
+                    // Allocate a new actor.
                     CutsceneActor *actor = new CutsceneActor();
-                    actor->name = match[2];
-                    actor->image = match[3];
 
+                    // Set the actor's name to the name field.
+                    actor->name = match[2];
+
+                    // Set the actor's image to a texture from the image field.
+                    if (!actor->image.loadFromFile(match[3])) {
+                        std::cerr << "CutsceneDialog::load(" << script << ")"
+                            << " - Could not load image ("
+                            << scriptLine << ")";
+                    }
+
+                    // Insert the actor at the desired position.
                     int index = std::stoi(match[1]) - 1;
 
                     actors.insert(actors.begin() + index,
@@ -53,7 +63,7 @@ bool CutsceneDialog::load(const std::string &script) {
                 if (std::regex_search(scriptLine, match, re) &&
                     match.size() > 1) {
                     // Find which actor is suppose to speak.
-                    int actor = std::stoi(match[1]) - 1;
+                    unsigned int actor = std::stoi(match[1]) - 1;
 
                     // Error if the desired actor does not exist.
                     if (actors.size() <= actor) {
@@ -64,6 +74,7 @@ bool CutsceneDialog::load(const std::string &script) {
                         return false;
                     }
 
+                    // Insert a line for the given actor with the given text.
                     CutsceneLine *line = new CutsceneLine();
                     line->actor = actors[actor];
                     line->line = match[2];
@@ -95,16 +106,24 @@ bool CutsceneDialog::load(const std::string &script) {
 }
 
 CutsceneLine *CutsceneDialog::nextLine() {
+    // Move to the next line.
     line++;
 
+    // Return null if there are no more lines.
     if (line >= lines.size()) {
         return nullptr;
     }
 
+    // Return the next line.
     return lines[line].get();
 }
 
 CutsceneLine *CutsceneDialog::getLine() {
+    // Return null if there are no more lines.
+    if (line >= lines.size()) {
+        return nullptr;
+    }
+
     return lines[line].get();
 }
 

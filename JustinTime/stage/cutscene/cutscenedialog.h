@@ -2,11 +2,12 @@
 
 #include <vector>
 #include <memory>
+#include <SFML/Graphics.hpp>
 
 // An actor within a dialog. Actors simply have a name and identifying image.
 typedef struct {
     std::string name;
-    std::string image;
+    sf::Texture image;
 } CutsceneActor;
 
 // A line within a dialog that is associated with an actor.
@@ -24,7 +25,7 @@ class CutsceneDialog {
         std::vector<std::unique_ptr<CutsceneLine>> lines;
 
         // Which line the dialog is current at.
-        int line;
+        unsigned int line;
 
     public:
         // Parses a dialog script so it can be used.

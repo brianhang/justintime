@@ -18,6 +18,8 @@ class CutsceneStage : public Stage {
         sf::RectangleShape bottom;
         sf::RectangleShape background;
 
+        sf::Sprite actor;
+
         sf::SoundBuffer tickSoundBuffer;
         sf::Sound tickSound;
 
@@ -33,5 +35,5 @@ class CutsceneStage : public Stage {
         void update(float deltaTime);
         void draw(sf::RenderWindow &window);
         void onEvent(const sf::Event &e);
-        void setText(const std::string &text);
+        void showLine();
 };

@@ -40,21 +40,27 @@ CutsceneStage::CutsceneStage() {
     background.setSize(sf::Vector2f(640.0f, 480.0f));
     background.setFillColor(sf::Color(125, 125, 125));
 
-    if (dialog.load("scripts/test.txt")) {
-        CutsceneLine *line = dialog.getLine();
+    dialogShape.setPosition(96.0f, 480.0f - (BAR_HEIGHT * 0.5f));
 
-        setText(line->actor->name + ": " + line->line);
+    actor.setPosition(0.0f, 480.0f - BAR_HEIGHT);
+    actor.setTextureRect(sf::IntRect(0, 0, 96, 96));
+
+    if (dialog.load("scripts/test.txt")) {
+        showLine();
     }
 }
 
-void CutsceneStage::setText(const std::string &text) {
-    dialogText = text;
+void CutsceneStage::showLine() {
+    CutsceneLine *line = dialog.getLine();
+
+    if (!line) {
+        return;
+    }
+
+    dialogText = line->actor->name + ": " + line->line;
     dialogTextIndex = 0;
 
     dialogTimer.restart();
-
-    dialogShape.setString("");
-    dialogShape.setPosition(48.0f, 480.0f - (BAR_HEIGHT * 0.5f));
 }
 
 void CutsceneStage::update(float deltaTime) {
@@ -64,25 +70,28 @@ void CutsceneStage::update(float deltaTime) {
 
     if ((skip || dialogTimer.getElapsedTime() >= sf::seconds(DIALOG_DELAY)) &&
         dialogTextIndex <= dialogText.size()) {
+        if (dialogTextIndex == 0) {
+            CutsceneLine *line = dialog.getLine();
+
+            if (line) {
+                actor.setTexture(line->actor->image);
+            }
+        }
+
         dialogTextIndex++;
 
         if (dialogTextIndex > dialogText.size()) {
-            CutsceneLine *line = dialog.nextLine();
+            dialog.nextLine();
 
-            if (line) {
-                dialogText = line->actor->name + ": " + line->line;
-                dialogTextIndex = 0;
-                dialogTimer.restart();
-                
-                paused = true;
-            }
+            showLine();
+            paused = true;
 
             return;
         }
 
         dialogShape.setString(dialogText.substr(0, dialogTextIndex));
 
-        if (dialogTextIndex == 0 || dialogText[dialogTextIndex - 1] == '\n') {
+        if (dialogText[dialogTextIndex - 1] == '\n') {
             sf::FloatRect bounds = dialogShape.getLocalBounds();
 
             dialogShape.setOrigin(0.0f, bounds.top + bounds.height * 0.5f);
@@ -100,6 +109,7 @@ void CutsceneStage::draw(sf::RenderWindow &window) {
     window.draw(background);
     window.draw(top);
     window.draw(bottom);
+    window.draw(actor);
     window.draw(dialogShape);
 }
 
