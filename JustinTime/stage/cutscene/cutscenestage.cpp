@@ -51,6 +51,7 @@ CutsceneStage::CutsceneStage(const std::string &script) : CutsceneStage() {
 void CutsceneStage::load(const std::string &script) {
     if (dialog.load(script)) {
         showLine();
+        onStart();
     }
 }
 
@@ -90,7 +91,13 @@ void CutsceneStage::update(float deltaTime) {
 
         // If there are no more characters, move to the next line.
         if (dialogTextIndex > dialogText.size()) {
-            dialog.nextLine();
+            // Move to the next line if one exists, otherwise end
+            // the conversation.
+            if (!dialog.nextLine()) {
+                onFinish();
+
+                return;
+            }
 
             showLine();
             paused = true;

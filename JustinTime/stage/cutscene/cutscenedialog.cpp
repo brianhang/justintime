@@ -67,8 +67,8 @@ bool CutsceneDialog::load(const std::string &script) {
 
                     // Error if the desired actor does not exist.
                     if (actors.size() <= actor) {
-                        std::cerr << "CutsceneDialog::load(" << script << ") - "
-                            << "Invalid actor " << actor << " ("
+                        std::cerr << "CutsceneDialog::load(" << script << ") -"
+                            << " Invalid actor " << actor << " ("
                             << scriptLine << ")";
 
                         return false;
