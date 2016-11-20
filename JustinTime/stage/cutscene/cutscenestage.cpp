@@ -44,6 +44,10 @@ CutsceneStage::CutsceneStage() {
     actor.setTextureRect(sf::IntRect(0, 0, 96, 96));
 }
 
+CutsceneStage::CutsceneStage(const std::string &script) : CutsceneStage() {
+    load(script);
+}
+
 void CutsceneStage::load(const std::string &script) {
     if (dialog.load(script)) {
         showLine();

@@ -37,7 +37,11 @@ class CutsceneStage : public Stage {
         bool paused;
 
     public:
+        // Empty constructor for the stage.
         CutsceneStage();
+
+        // Constructor for the stage that loads a script.
+        CutsceneStage(const std::string &script);
 
         void update(float deltaTime);
         void draw(sf::RenderWindow &window);

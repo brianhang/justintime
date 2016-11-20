@@ -16,7 +16,7 @@ void JustinTime::run(const std::string &title, int width, int height) {
 
     // Stage director to handle stages within a game.
     director.setStage<CutsceneStage>();
-
+    
     // Game loop.
     while (window.isOpen()) {
         handleInput();
