@@ -1,5 +1,6 @@
-@1,Justin,textures/justin.png
-@2,Abraham Lincoln,textures/lincoln.png
+@1;Justin;textures/justin.png
+@2;Abraham Lincoln;textures/lincoln.png
+#@3;Brian;textures/brian.png wow
 
 2 Hello, Justin.
 1 Abraham Lincoln?

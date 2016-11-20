@@ -27,8 +27,8 @@ class CutsceneDialog {
         int line;
 
     public:
-        // Constructor that parses a dialog script.
-        CutsceneDialog(const std::string &script);
+        // Parses a dialog script so it can be used.
+        bool load(const std::string &script);
 
         // Moves to the next line in the dialog and returns it.
         CutsceneLine *nextLine();

@@ -1,11 +1,15 @@
 #pragma once
 
 #include "../stage.h"
+#include "cutscenedialog.h"
+
 #include <SFML/Audio.hpp>
 
 class CutsceneStage : public Stage {
     private:
-        sf::Text dialog;
+        CutsceneDialog dialog;
+
+        sf::Text dialogShape;
         sf::Font dialogFont;
 
         sf::Clock dialogTimer;

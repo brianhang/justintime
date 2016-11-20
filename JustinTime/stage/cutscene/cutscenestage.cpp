@@ -3,7 +3,7 @@
 
 #define DIALOG_TICK_SOUND "sounds/tick.ogg"
 #define DIALOG_FONT "fonts/pressstart2p.ttf"
-#define DIALOG_DELAY 0.05f
+#define DIALOG_DELAY 0.025f
 #define BAR_HEIGHT 96.0f
 
 CutsceneStage::CutsceneStage() {
@@ -22,8 +22,8 @@ CutsceneStage::CutsceneStage() {
         return;
     }
 
-    dialog.setFont(dialogFont);
-    dialog.setCharacterSize(8);
+    dialogShape.setFont(dialogFont);
+    dialogShape.setCharacterSize(8);
 
     // Set the appropriate horizontal bar height.
     const sf::Vector2f barSize(640.0f, BAR_HEIGHT);
@@ -46,6 +46,8 @@ CutsceneStage::CutsceneStage() {
             "1500s, when an unknown printer took a galley of\n" \
             "type and scrambled it to make a type\n" \
             "specimen book.");
+
+    dialog.load("scripts/test.txt");
 }
 
 void CutsceneStage::setText(const std::string &text) {
@@ -54,20 +56,20 @@ void CutsceneStage::setText(const std::string &text) {
 
     dialogTimer.restart();
 
-    dialog.setString("");
-    dialog.setPosition(48.0f, 480.0f - (BAR_HEIGHT * 0.5f));
+    dialogShape.setString("");
+    dialogShape.setPosition(48.0f, 480.0f - (BAR_HEIGHT * 0.5f));
 }
 
 void CutsceneStage::update(float deltaTime) {
     if ((skip || dialogTimer.getElapsedTime() >= sf::seconds(DIALOG_DELAY)) &&
         dialogTextIndex < dialogText.size()) {
         dialogTextIndex++;
-        dialog.setString(dialogText.substr(0, dialogTextIndex));
+        dialogShape.setString(dialogText.substr(0, dialogTextIndex));
 
         if (dialogTextIndex == 0 || dialogText[dialogTextIndex - 1] == '\n') {
-            sf::FloatRect bounds = dialog.getLocalBounds();
+            sf::FloatRect bounds = dialogShape.getLocalBounds();
 
-            dialog.setOrigin(0.0f, bounds.top + bounds.height * 0.5f);
+            dialogShape.setOrigin(0.0f, bounds.top + bounds.height * 0.5f);
         }
 
         if (!skip) {
@@ -82,7 +84,7 @@ void CutsceneStage::draw(sf::RenderWindow &window) {
     window.draw(background);
     window.draw(top);
     window.draw(bottom);
-    window.draw(dialog);
+    window.draw(dialogShape);
 }
 
 void CutsceneStage::onEvent(const sf::Event &e) {
