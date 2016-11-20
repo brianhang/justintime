@@ -42,6 +42,8 @@ CutsceneStage::CutsceneStage() {
     // Layout the actor image.
     actor.setPosition(0.0f, 480.0f - BAR_HEIGHT);
     actor.setTextureRect(sf::IntRect(0, 0, 96, 96));
+
+    active = false;
 }
 
 CutsceneStage::CutsceneStage(const std::string &script) : CutsceneStage() {
@@ -51,7 +53,6 @@ CutsceneStage::CutsceneStage(const std::string &script) : CutsceneStage() {
 void CutsceneStage::load(const std::string &script) {
     if (dialog.load(script)) {
         showLine();
-        onStart();
     }
 }
 
@@ -74,6 +75,12 @@ void CutsceneStage::update(float deltaTime) {
         return;
     }
 
+    // Indicate the dialog has started if this is the first update.
+    if (!active) {
+        onStart();
+        active = true;
+    }
+
     // Draw the next character when needed.
     if ((skip || dialogTimer.getElapsedTime() >= sf::seconds(DIALOG_DELAY)) &&
         dialogTextIndex <= dialogText.size()) {
@@ -91,13 +98,7 @@ void CutsceneStage::update(float deltaTime) {
 
         // If there are no more characters, move to the next line.
         if (dialogTextIndex > dialogText.size()) {
-            // Move to the next line if one exists, otherwise end
-            // the conversation.
-            if (!dialog.nextLine()) {
-                onFinish();
-
-                return;
-            }
+            dialog.nextLine();
 
             showLine();
             paused = true;
@@ -138,8 +139,15 @@ void CutsceneStage::draw(sf::RenderWindow &window) {
 void CutsceneStage::onEvent(const sf::Event &e) {
     // If space is pressed, skip to the next character.
     if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Space) {
-        skip = true;
-        paused = false;
+        // If there is another line to go to, unpause. Otherwise, finish
+        // the dialog.
+        if (dialog.getLine()) {
+            skip = true;
+            paused = false;
+        } else if (active) {
+            onFinish();
+            active = false;
+        }
     } else if (e.type == sf::Event::KeyReleased &&
                e.key.code == sf::Keyboard::Space) {
         skip = false;

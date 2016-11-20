@@ -35,6 +35,7 @@ class CutsceneStage : public Stage {
         // States for the text being drawn.
         bool skip;
         bool paused;
+        bool active;
 
     public:
         // Empty constructor for the stage.
