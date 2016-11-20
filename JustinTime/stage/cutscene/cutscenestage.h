@@ -31,7 +31,7 @@ class CutsceneStage : public Stage {
         // Keeps track of which character is being drawn.
         std::string dialogText;
         unsigned int dialogTextIndex;
-        
+
         // States for the text being drawn.
         bool skip;
         bool paused;

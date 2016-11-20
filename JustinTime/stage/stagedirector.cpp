@@ -8,23 +8,23 @@ StageDirector &StageDirector::getInstance() {
 
 void StageDirector::draw(sf::RenderWindow &window) {
     // Delegate drawing to the current stage.
-	if (stage.get()) {
-		stage->draw(window);
-	}
+    if (stage.get()) {
+        stage->draw(window);
+    }
 }
 
 void StageDirector::update(float deltaTime) {
     // Update the current stage.
-	if (stage.get()) {
+    if (stage.get()) {
         stage->update(deltaTime);
-	}
+    }
 }
 
 void StageDirector::onEvent(const sf::Event &e) {
     // Delegate event handling to the current stage.
-	if (stage.get()) {
-		stage->onEvent(e);
-	}
+    if (stage.get()) {
+        stage->onEvent(e);
+    }
 }
 
 Stage *StageDirector::getStage() {
