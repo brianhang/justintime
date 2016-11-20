@@ -1,0 +1,12 @@
+@1,Justin,textures/justin.png
+@2,Abraham Lincoln,textures/lincoln.png
+
+2 Hello, Justin.
+1 Abraham Lincoln?
+2 Yes, it's me. I'm here to help you succeed.
+1 How? I'm a dingus.
+2 No you're not. You're Justin.
+2 You just need to believe, Justin.
+2 Now, wake up.
+1 What?
+2 Wake up!
