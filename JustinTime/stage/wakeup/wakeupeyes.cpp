@@ -2,7 +2,7 @@
 #include <iostream>
 
 WakeUpEyes::WakeUpEyes(float newTiredness) {
-    const sf::Vector2f eyeSize(640.0f, 239.0f);
+    const sf::Vector2f eyeSize(640.0f, 239.5f);
 
     // Set the background to fill the screen.
     background.setSize(sf::Vector2f(640.0f, 480.0f));

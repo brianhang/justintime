@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "stage/wakeup/wakeupstage.h"
-#include "stage/cutscene/cutscenestage.h"
+#include "stage/testcutscene/testcutscene.h"
 
 JustinTime::JustinTime() : director(StageDirector::getInstance()) {
     // Set the random seed to the current time to randomize values.
@@ -15,7 +15,7 @@ void JustinTime::run(const std::string &title, int width, int height) {
     window.setFramerateLimit(60);
 
     // Stage director to handle stages within a game.
-    director.setStage<CutsceneStage>();
+    director.setStage<TestCutscene>();
     
     // Game loop.
     while (window.isOpen()) {

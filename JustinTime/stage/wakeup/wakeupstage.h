@@ -14,4 +14,3 @@ class WakeUpStage : public Stage {
         void draw(sf::RenderWindow &window);
         void onEvent(const sf::Event &e);
 };
-

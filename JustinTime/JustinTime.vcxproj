@@ -130,6 +130,7 @@
     <ClCompile Include="stage\lecture\lecturewords.cpp" />
     <ClCompile Include="stage\menu\menustage.cpp" />
     <ClCompile Include="stage\stagedirector.cpp" />
+    <ClCompile Include="stage\testcutscene\testcutscene.cpp" />
     <ClCompile Include="stage\wakeup\wakeupeyes.cpp" />
     <ClCompile Include="stage\wakeup\wakeupstage.cpp" />
   </ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="stage\menu\menustage.h" />
     <ClInclude Include="stage\stage.h" />
     <ClInclude Include="stage\stagedirector.h" />
+    <ClInclude Include="stage\testcutscene\testcutscene.h" />
     <ClInclude Include="stage\wakeup\wakeupeyes.h" />
     <ClInclude Include="stage\wakeup\wakeupstage.h" />
   </ItemGroup>
