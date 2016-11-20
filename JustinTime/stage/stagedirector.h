@@ -20,6 +20,9 @@ class StageDirector {
             stage.reset(new T());
         }
 
+        // Returns the current stage.
+        Stage *getStage();
+
 		// Updates the current stage.
 		void update(float deltaTime);
 
@@ -29,4 +32,3 @@ class StageDirector {
 		// Draws the current stage.
 		void draw(sf::RenderWindow &window);
 };
-

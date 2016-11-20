@@ -26,3 +26,7 @@ void StageDirector::onEvent(const sf::Event &e) {
 		stage->onEvent(e);
 	}
 }
+
+Stage *StageDirector::getStage() {
+    return stage.get();
+}
